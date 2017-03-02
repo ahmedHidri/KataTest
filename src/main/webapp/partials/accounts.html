@@ -1,0 +1,76 @@
+<div class="col-md-6">
+	<form class="form-horizontal" role="form"
+		ng-submit="getAccountBy(username)">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control" id="input-username"
+					ng-model="username" placeholder="Enter the client name"> <span
+					class="input-group-btn">
+					<button class="btn btn-default" name="searchUserBtn" type="submit">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+		</div>
+	</form>
+
+	<form name="userForm" novalidate>
+
+		<div class="panel panel-default" ng-show="account">
+			<div class="panel-heading">{{account.client.username}}</div>
+			<table class="table table-hover table-condensed table-no-border"
+				name="transactions">
+				<thead>
+					<tr>
+						<th class="col-md-5">Amount</th>
+						<th class="col-md-6">Type</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="transaction in account.transactions.transactions">
+						<td>
+						<ng-form name="userFieldForm"> 
+						<input name="amount" type="number" class="form-control" ng-model="transaction.amount" min="0" required> 
+								<tt ng-show="!userFieldForm.$valid">the
+								field amount needs to be positive</tt>
+								<tt
+								ng-show="userFieldForm.$error.required">the field amount is
+								required</tt> </ng-form></td>
+						<td><select name="type" ng-model="transaction.type"
+							class="form-control">
+								<option>DEPOSIT</option>
+								<option>WITHDRAW</option>
+								<option>TRANSFER</option>
+						</select></td>
+						<td ng-show="transaction.type == 'TRANSFER'">
+						<input name=accountName type="text" class="form-control" ng-model="accountName" required> 
+						<button ng-click="findAccount(accountName,$index)">Find</button>
+						</td>
+					</tr>
+					<tr>
+						<td ><a ng-click="newTransaction()" name="addTransactionBtn">Add
+								transaction</a></td>
+						<td></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>Balance</td>
+						<td>{{account.balance}} EUR</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-12">
+				<div class="pull-right">
+					<button type="submit" name="saveNewTransactionBtn"
+						ng-click="updateAccount()"
+						ng-disabled="!!!account.client.username" class="btn btn-default">Save</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

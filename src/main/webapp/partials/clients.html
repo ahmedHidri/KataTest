@@ -1,0 +1,29 @@
+<div class="col-md-6">
+    <form ng-submit="addClient()">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-11">Username</th>
+                <th class="col-md-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="client in clients | orderBy:'username'">
+                    <td><a ng-href="#/account/{{client.username}}">{{client.username}}</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td>
+                    <input type="text" name="addClientInput" class="form-control" ng-model="newClient.username" placeholder="Enter a client name" />
+                </td>
+                <td>
+                    <button name="addClientBtn" class="btn btn-default" type="submit">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
